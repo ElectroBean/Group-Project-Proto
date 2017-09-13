@@ -20,10 +20,12 @@ public class CharacterControls : MonoBehaviour
     public Transform Ground;
 
     Rigidbody rb;
+    Vector3 grav;
 
     private void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+        grav = new Vector3(0, -1, 0);
     }
 
     // Use this for initialization
@@ -35,6 +37,14 @@ public class CharacterControls : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Ground")
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
         {
             grounded = true;
         }
@@ -58,8 +68,8 @@ public class CharacterControls : MonoBehaviour
         direction *= speed * Time.deltaTime;
 
         transform.Translate(direction);
-        
 
+        rb.velocity += grav;
         if (grounded)
         {
             JumpTimeCounter = JumpTime;

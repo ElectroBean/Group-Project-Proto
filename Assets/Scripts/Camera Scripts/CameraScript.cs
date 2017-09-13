@@ -15,7 +15,7 @@ public class CameraScript : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         cam = Camera.main;
-        translate *= 5 * Time.deltaTime;
+        translate *= 10 * Time.deltaTime;
     }
 
     // Use this for initialization
