@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestoryBrokenPiece : MonoBehaviour {
+public class DisableCollider : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -11,6 +11,6 @@ public class DestoryBrokenPiece : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Destroy(gameObject, 2.0f);
+        gameObject.GetComponent<SphereCollider>().enabled = false;
 	}
 }

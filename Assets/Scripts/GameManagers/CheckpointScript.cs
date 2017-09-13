@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestoryBrokenPiece : MonoBehaviour {
+public class CheckpointScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -11,6 +11,11 @@ public class DestoryBrokenPiece : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Destroy(gameObject, 2.0f);
+		
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        gameObject.transform.Rotate(new Vector3(0, 180, 0));
+    }
 }

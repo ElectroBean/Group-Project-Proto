@@ -10,12 +10,14 @@ public class CameraScript : MonoBehaviour
     Vector3 pos = new Vector3(0, 0, 0);
     GameObject player;
     Vector3 translate = new Vector3(1, 0, 0);
+    public float transSpeed;
+    public float fovSpeed;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         cam = Camera.main;
-        translate *= 10 * Time.deltaTime;
+        translate *= transSpeed * Time.deltaTime;
     }
 
     // Use this for initialization
@@ -34,9 +36,13 @@ public class CameraScript : MonoBehaviour
         {
             transform.Translate(translate);
         }
-        if(pos.x <= 0.1 && cam.orthographicSize <= 10)
+        if(pos.x <= 0.1 && cam.orthographicSize <= 20)
         {
-            cam.fieldOfView += 1f;
+            cam.orthographicSize += fovSpeed;
+        }
+        if (pos.x >= 0.4 && cam.orthographicSize >= 10)
+        {
+            cam.orthographicSize -= 1f;
         }
 
 
