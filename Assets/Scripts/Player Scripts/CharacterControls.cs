@@ -110,4 +110,22 @@ public class CharacterControls : MonoBehaviour
             StoppedJumping = true;
         }
     }
+
+    public void Slow()
+    {
+        StartCoroutine("slow");
+        //StopCoroutine("slow");
+    }
+
+    IEnumerator slow()
+    {
+        speed = 7.5f;
+        yield return new WaitForSeconds(2f);
+        speed = 15f;
+    }
+
+    IEnumerator stun()
+    {
+        yield return new WaitForSeconds(5f);
+    }
 }

@@ -18,4 +18,9 @@ public class RocketUpdate : MonoBehaviour {
         direction *= speed * Time.deltaTime;
         transform.Translate(direction);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destroy(gameObject);
+    }
 }

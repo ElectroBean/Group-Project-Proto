@@ -30,9 +30,11 @@ public class CameraScript : MonoBehaviour
     void Update()
     {
         Vector3 pos = Camera.main.WorldToViewportPoint(player.transform.position);
+        transSpeed = player.GetComponent<CharacterControls>().speed;
+        //translate *= transSpeed * Time.deltaTime;
         //pos.x = Mathf.Clamp01(pos.x);
         //pos.y = Mathf.Clamp01(pos.y);
-        if(pos.x >= 0.7f)
+        if (pos.x >= 0.5f)
         {
             transform.Translate(translate);
         }

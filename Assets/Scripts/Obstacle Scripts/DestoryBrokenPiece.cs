@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DestoryBrokenPiece : MonoBehaviour {
 
+    public float destroyTime;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -11,6 +13,6 @@ public class DestoryBrokenPiece : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Destroy(gameObject, 2.0f);
+        Destroy(gameObject, destroyTime);
 	}
 }

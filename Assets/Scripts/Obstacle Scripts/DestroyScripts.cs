@@ -31,9 +31,12 @@ public class DestroyScripts : MonoBehaviour
             Instantiate(brokenThing, gameObject.transform.position, new Quaternion(0, 0, 0, 0));
             spawn = true;
         }
-      
+        if(collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<CharacterControls>().Slow();
+            //collision.gameObject.GetComponent<CharacterControls>().StartCoroutine("stun");
+        }
 
        
     }
-    
 }
