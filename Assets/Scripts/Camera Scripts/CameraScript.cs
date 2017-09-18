@@ -36,11 +36,11 @@ public class CameraScript : MonoBehaviour
         {
             transform.Translate(translate);
         }
-        if(pos.x <= 0.1 && cam.orthographicSize <= 20)
+        if(pos.x <= 0.1 && cam.orthographicSize <= 25)
         {
             cam.orthographicSize += fovSpeed;
         }
-        if (pos.x >= 0.4 && cam.orthographicSize >= 10)
+        if (pos.x >= 0.4 && cam.orthographicSize >= 15)
         {
             cam.orthographicSize -= 1f;
         }

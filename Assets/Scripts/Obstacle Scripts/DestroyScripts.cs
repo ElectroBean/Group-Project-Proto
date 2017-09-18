@@ -24,13 +24,14 @@ public class DestroyScripts : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Destroy(gameObject);
         player = collision.gameObject;
         if (!spawn)
         {
             Instantiate(brokenThing, gameObject.transform.position, new Quaternion(0, 0, 0, 0));
             spawn = true;
         }
-        Destroy(gameObject);
+      
 
        
     }
