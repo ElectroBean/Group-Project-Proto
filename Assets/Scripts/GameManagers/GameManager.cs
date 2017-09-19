@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     GameObject Checkpoints;
-    GameObject player;
+    GameObject[] player;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         Checkpoints = GameObject.FindGameObjectWithTag("Checkpoint");
-        player = GameObject.FindGameObjectWithTag("Player");
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(Camera.main.WorldToViewportPoint(player.transform.position).y <= 0)
+        player = GameObject.FindGameObjectsWithTag("Player");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        for (int i = 0; i < 2; i++)
         {
-            Vector3 newT = Checkpoints.transform.position;
-            newT.Set(Checkpoints.transform.position.x, Checkpoints.transform.position.y + 10, 0);
-            player.transform.position = newT;
+            if (Camera.main.WorldToViewportPoint(player[i].transform.position).y <= 0 || Camera.main.WorldToViewportPoint(player[i].transform.position).x <= 0)
+            {
+                Vector3 newT = Checkpoints.transform.position;
+                newT.Set(Checkpoints.transform.position.x, Checkpoints.transform.position.y + 10, 0);
+                player[i].transform.position = newT;
+            }
+
         }
-	}
+    }
 }

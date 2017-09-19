@@ -16,9 +16,9 @@ public class RocketScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         pos = new Vector3(gameObject.transform.position.x + 2, gameObject.transform.position.y, gameObject.transform.position.z);
-		if(Input.GetKeyDown(KeyCode.F) && rocket)
+		if(Input.GetKeyDown(KeyCode.Space) && rocket)
         {
-            Instantiate(rocketPrefab, pos, new Quaternion(0, 0, 0, 0));
+            Instantiate(rocketPrefab, pos, Quaternion.Euler(0, 0, 90));
         }
 	}
 

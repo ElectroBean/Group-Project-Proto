@@ -7,15 +7,15 @@ public class CameraScript : MonoBehaviour
 
     public GameObject obj;
     public Camera cam;
-    Vector3 pos = new Vector3(0, 0, 0);
-    GameObject player;
-    Vector3 translate = new Vector3(1, 0, 0);
+    Vector3[] pos;
+    GameObject[] player;
+    public Vector3 translate = new Vector3(1, 0, 0);
     public float transSpeed;
     public float fovSpeed;
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectsWithTag("Player");
         cam = Camera.main;
         translate *= transSpeed * Time.deltaTime;
     }
@@ -23,30 +23,30 @@ public class CameraScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        pos = new[] { new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f) };
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 pos = Camera.main.WorldToViewportPoint(player.transform.position);
-        transSpeed = player.GetComponent<CharacterControls>().speed;
-        //translate *= transSpeed * Time.deltaTime;
-        //pos.x = Mathf.Clamp01(pos.x);
-        //pos.y = Mathf.Clamp01(pos.y);
-        if (pos.x >= 0.5f)
+        for (int i = 0; i < 2; i++)
         {
-            transform.Translate(translate);
+            pos[i] = Camera.main.WorldToViewportPoint(player[i].transform.position);
+            //translate *= transSpeed * Time.deltaTime;
+
+            if (pos[i].x >= 0.5f)
+            {
+                transform.Translate(translate);
+            }
+            if (pos[i].x <= 0.1 && cam.orthographicSize <= 25)
+            {
+                cam.orthographicSize += fovSpeed;
+            }
+           
         }
-        if(pos.x <= 0.1 && cam.orthographicSize <= 25)
-        {
-            cam.orthographicSize += fovSpeed;
-        }
-        if (pos.x >= 0.4 && cam.orthographicSize >= 15)
+        if (pos[0].x >= 0.4 && pos[1].x >= 0.4 && cam.orthographicSize >= 15)
         {
             cam.orthographicSize -= 1f;
         }
-
-
     }
 }

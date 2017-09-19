@@ -14,7 +14,7 @@ public class RocketUpdate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        direction = new Vector3(1, 0, 0);
+        direction = new Vector3(0, -2, 0);
         direction *= speed * Time.deltaTime;
         transform.Translate(direction);
     }

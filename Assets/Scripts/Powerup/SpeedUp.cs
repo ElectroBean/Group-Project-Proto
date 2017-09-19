@@ -18,15 +18,21 @@ public class SpeedUp : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
+            other.gameObject.GetComponent<CharacterControls>().maxSpeed *= 2;
             other.gameObject.GetComponent<CharacterControls>().speed *= 2;
         }
+
+        Camera.main.GetComponent<CameraScript>().translate *= 2;
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
+            other.gameObject.GetComponent<CharacterControls>().maxSpeed /= 2;
             other.gameObject.GetComponent<CharacterControls>().speed /= 2;
         }
+
+        Camera.main.GetComponent<CameraScript>().translate /= 2;
     }
 }
