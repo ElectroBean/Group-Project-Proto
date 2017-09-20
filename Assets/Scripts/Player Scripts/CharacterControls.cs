@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XboxCtrlrInput;
 
 public class CharacterControls : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class CharacterControls : MonoBehaviour
     public Transform Ground;
 
     Rigidbody rb;
-    public Vector3 grav;
+    public float grav;
 
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class CharacterControls : MonoBehaviour
     void Start()
     {
         JumpTimeCounter = JumpTime;
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -75,51 +77,57 @@ public class CharacterControls : MonoBehaviour
     // handy for making sure you dont go inside other things
     private void FixedUpdate()
     {
-        h = Input.GetAxis("Horizontal" + type);
+        //h = Input.GetAxis("Horizontal" + type);
+        h = XCI.GetAxis(XboxAxis.LeftStickX);
         //v = Input.GetAxis("Vertical");
-        direction = new Vector3(h, 0, 0);
-        direction *= speed;
+        direction = new Vector3(h, rb.velocity.y, 0);
+        direction.x *= speed;
 
-        rb.AddForce(grav);
-
-        if (rb.velocity.x < maxSpeed)
-        {
-            rb.velocity = direction;
-            //rb.AddForce(direction * Time.deltaTime, ForceMode.VelocityChange);
-        }
+        rb.velocity = direction;
 
         //Gravity
+        rb.velocity = new Vector3(rb.velocity.x, grav, 0);
         //rb.velocity += grav;
         //if you press down the mouse button...
-        if (Input.GetAxis("Vertical" + type) > 0)
-        {
-            //and you are on the ground...
-            if (grounded)
+        //if (Input.GetAxis("Vertical" + type) > 0)
+        //{
+            if (XCI.GetButton(XboxButton.A))
             {
-                //jump!
-                rb.velocity = new Vector3(rb.velocity.x, JumpVel, 0);
-                StoppedJumping = false;
+                //and you are on the ground...
+                if (grounded)
+                {
+                    //jump!
+                    rb.velocity = new Vector3(rb.velocity.x, JumpVel, 0);
+                    StoppedJumping = false;
+                }
+
             }
-        }
+        //}
         //if you keep holding down the mouse button...
-        if ((Input.GetAxis("Vertical" + type) > 0) && !StoppedJumping)
-        {
-            //and your counter hasn't reached zero...
-            if (JumpTimeCounter > 0)
+        //if ((Input.GetAxis("Vertical" + type) > 0) && !StoppedJumping)
+        //{
+            if (XCI.GetButton(XboxButton.A) && !StoppedJumping)
             {
-                //keep jumping!
-                rb.velocity = new Vector3(rb.velocity.x, JumpVel, 0);
-                JumpTimeCounter -= Time.deltaTime;
+                //and your counter hasn't reached zero...
+                if (JumpTimeCounter > 0)
+                {
+                    //keep jumping!
+                    rb.velocity = new Vector3(rb.velocity.x, JumpVel, 0);
+                    JumpTimeCounter -= Time.deltaTime;
+                }
             }
-        }
+        //}
 
         //if you stop holding down the mouse button...
-        if (Input.GetAxis("Vertical" + type) <= 0)
-        {
-            //stop jumping and set counter to zero.
-            JumpTimeCounter = 0;
-            StoppedJumping = true;
-        }
+        //if (Input.GetAxis("Vertical" + type) <= 0)
+        //{
+            if (XCI.GetButtonUp(XboxButton.A) && !StoppedJumping)
+            {
+                //stop jumping and set counter to zero.
+                JumpTimeCounter = 0;
+                StoppedJumping = true;
+            }
+        //}
     }
 
     public void Slow()
